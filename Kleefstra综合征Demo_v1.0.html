@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kleefstra Syndrome - 9q34.3 Microdeletion Syndrome</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a6b5a;
+      --primary-light: #2a9d8f;
+      --primary-dark: #0e4a3d;
+      --accent: #e9c46a;
+      --accent-light: #f4e8b0;
+      --warm: #f5f0e8;
+      --warm-dark: #e8dfd0;
+      --text-primary: #2d3436;
+      --text-secondary: #636e72;
+      --text-light: #b2bec3;
+      --bg-white: #ffffff;
+      --bg-section: #f8f9fa;
+      --border-light: #e0e0e0;
+      --shadow-soft: 0 2px 12px rgba(0,0,0,0.04);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-white);
+      line-height: 1.7;
+    }
+
+    .en { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      background: rgba(26,107,90,0.06);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(26,107,90,0.15);
+    }
+    .lang-btn {
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      transition: all 0.3s;
+    }
+    .lang-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: box-shadow 0.3s;
+    }
+    .navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+    .nav-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-brand svg { width: 28px; height: 28px; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 1px;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.25);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(26,107,90,0.55) 0%, rgba(14,74,61,0.65) 50%, rgba(42,157,143,0.45) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 800px;
+      padding: 40px 20px;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 20px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 24px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-title {
+      font-size: 52px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .hero-title .en {
+      font-family: 'Inter', sans-serif;
+      font-size: 28px;
+      font-weight: 400;
+      display: block;
+      margin-top: 8px;
+      opacity: 0.85;
+      letter-spacing: 0;
+    }
+    .hero-desc {
+      font-size: 17px;
+      color: rgba(255,255,255,0.85);
+      max-width: 600px;
+      margin: 0 auto 36px;
+      line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      border: none;
+    }
+    .btn-primary {
+      background: white;
+      color: var(--primary);
+    }
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 1.5px solid rgba(255,255,255,0.4);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
+    .btn-accent {
+      background: var(--accent);
+      color: var(--primary-dark);
+    }
+    .btn-accent:hover { background: #dbb94d; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(233,196,106,0.3); }
+    .btn-cta {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-cta:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,107,90,0.3); }
+
+    /* Sections */
+    section { padding: 90px 40px; }
+    .section-container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary-light);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 40px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+      padding-left: 24px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+    .timeline-year {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .timeline-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .timeline-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* About */
+    .about-section { background: var(--bg-section); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-text { font-size: 15px; color: var(--text-secondary); line-height: 1.9; }
+    .about-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 800px;
+      margin-top: 32px;
+    }
+    .feature-card {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .feature-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(42,157,143,0.12), rgba(26,107,90,0.08));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .feature-icon svg { width: 24px; height: 24px; color: var(--primary); }
+    .feature-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    .feature-text small {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .stat-card {
+      background: white;
+      padding: 28px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid var(--border-light);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+    .stat-number {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Disease Knowledge Subsections */
+    .subsection-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 72px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .subsection-title::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 22px;
+      border-radius: 3px;
+      background: linear-gradient(180deg, var(--primary-light), var(--primary));
+      flex-shrink: 0;
+    }
+    .subsection-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      margin-bottom: 28px;
+      max-width: 920px;
+    }
+    .ref-note {
+      margin-top: 20px;
+      font-size: 12.5px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* Citations & References */
+    sup.cite-ref { font-size: 11px; margin-left: 2px; }
+    sup.cite-ref a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    sup.cite-ref a:hover { text-decoration: underline; }
+    .ref-list {
+      margin-top: 24px;
+      padding: 16px 20px;
+      background: rgba(42,157,143,0.05);
+      border-left: 3px solid var(--primary-light);
+      border-radius: 0 10px 10px 0;
+    }
+    .ref-list-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .ref-items { margin: 0; padding-left: 20px; }
+    .ref-items li {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 4px;
+    }
+    .ref-items li:last-child { margin-bottom: 0; }
+    .ref-items li a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .ref-items li a:hover { text-decoration: underline; }
+
+    /* EHMT1 Function */
+    .ehmt1-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .ehmt1-card {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 24px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .ehmt1-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+    .ehmt1-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .ehmt1-card p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Symptoms */
+    .symptom-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .symptom-card {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 22px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .symptom-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+    .symptom-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .symptom-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+    .symptom-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 100px;
+      background: rgba(42,157,143,0.12);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .symptom-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Research Progress */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .research-card {
+      position: relative;
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 28px;
+      border-top: 4px solid var(--primary-light);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .card-stretched-link {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: inherit;
+    }
+    .research-card .research-link { position: relative; z-index: 2; }
+    .card-ext-hint {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: rgba(42,157,143,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      z-index: 2;
+      pointer-events: none;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .card-ext-hint svg { width: 15px; height: 15px; }
+    .research-card:hover .card-ext-hint { background: rgba(42,157,143,0.22); transform: rotate(8deg) scale(1.05); }
+    .research-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .research-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .research-year {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .research-journal {
+      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 100px;
+      background: rgba(26,107,90,0.08);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .research-pmid {
+      font-size: 12px;
+      color: var(--text-light);
+      font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    }
+    .research-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .research-desc {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    .research-card ul {
+      list-style: none;
+      margin: 12px 0;
+    }
+    .research-card ul li {
+      position: relative;
+      padding: 4px 0 4px 18px;
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .research-card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 13px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary-light);
+    }
+    .research-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .research-link:hover { text-decoration: underline; }
+    .research-link svg { width: 16px; height: 16px; }
+
+    .research-figure {
+      margin-top: 18px;
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .research-figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+    .research-figure figcaption {
+      margin-top: 10px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .followup-actions { display: grid; gap: 10px; }
+    .followup-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      background: #d32f2f;
+      color: white;
+    }
+    .followup-btn:hover { background: #b71c1c; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(211,47,47,0.3); }
+    .followup-btn svg { width: 18px; height: 18px; }
+
+    /* Downloads */
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .download-card {
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .download-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); border-color: var(--primary-light); }
+    .download-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .download-icon svg { width: 24px; height: 24px; color: white; }
+    .download-info { flex: 1; }
+    .download-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+    .download-meta { font-size: 13px; color: var(--text-light); margin-bottom: 8px; }
+    .download-link { font-size: 13px; color: var(--primary); font-weight: 500; text-decoration: none; }
+    .download-link:hover { text-decoration: underline; }
+
+    /* Recruitment */
+    .recruit-section {
+      background: linear-gradient(180deg, #ffffff 0%, var(--warm) 100%);
+    }
+    .recruit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .recruit-card {
+      position: relative;
+      background: white;
+      border-radius: 16px;
+      padding: 32px 28px;
+      border: 1px solid var(--border-light);
+      border-top: 4px solid var(--primary-light);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .recruit-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+    .recruit-card.green { border-top-color: var(--primary); }
+    .recruit-card.amber { border-top-color: var(--accent); }
+    .recruit-card.orange { border-top-color: #e65100; }
+    .recruit-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .recruit-card.green .recruit-icon { background: linear-gradient(135deg, rgba(42,157,143,0.16), rgba(26,107,90,0.1)); }
+    .recruit-card.green .recruit-icon svg { color: var(--primary); }
+    .recruit-card.amber .recruit-icon { background: linear-gradient(135deg, rgba(233,196,106,0.22), rgba(233,196,106,0.1)); }
+    .recruit-card.amber .recruit-icon svg { color: #b8860b; }
+    .recruit-card.orange .recruit-icon { background: linear-gradient(135deg, rgba(230,81,0,0.14), rgba(230,81,0,0.06)); }
+    .recruit-card.orange .recruit-icon svg { color: #e65100; }
+    .recruit-icon svg { width: 28px; height: 28px; }
+    .recruit-tag {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .recruit-card.green .recruit-tag { background: #e8f5e9; color: #2e7d32; }
+    .recruit-card.amber .recruit-tag { background: #fff8e1; color: #b8860b; }
+    .recruit-card.orange .recruit-tag { background: #fff3e0; color: #e65100; }
+    .recruit-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .recruit-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+    .recruit-benefits {
+      list-style: none;
+      margin-bottom: 22px;
+      flex: 1;
+    }
+    .recruit-benefits li {
+      padding: 6px 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.6;
+    }
+    .recruit-benefits li svg { flex-shrink: 0; margin-top: 3px; color: var(--primary-light); }
+    .recruit-card.amber .recruit-benefits li svg { color: #b8860b; }
+    .recruit-card.orange .recruit-benefits li svg { color: #e65100; }
+    .recruit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      width: 100%;
+    }
+    .recruit-card.green .recruit-btn { background: var(--primary); color: white; }
+    .recruit-card.green .recruit-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,107,90,0.3); }
+    .recruit-card.amber .recruit-btn { background: var(--accent); color: var(--primary-dark); }
+    .recruit-card.amber .recruit-btn:hover { background: #dbb94d; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(233,196,106,0.3); }
+    .recruit-card.orange .recruit-btn { background: #e65100; color: white; }
+    .recruit-card.orange .recruit-btn:hover { background: #c44400; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(230,81,0,0.3); }
+    .recruit-btn svg { width: 18px; height: 18px; }
+
+    /* Embedded Form */
+    .form-section {
+      background: var(--bg-section);
+      padding: 80px 40px;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--text-primary);
+      color: rgba(255,255,255,0.7);
+      padding: 60px 40px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+    .footer-contact {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 24px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* Mobile hamburger */
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-toggle svg { width: 24px; height: 24px; color: var(--text-primary); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      section { padding: 60px 20px; }
+      .hero-title { font-size: 32px; }
+      .hero-title .en { font-size: 20px; }
+      .hero-desc { font-size: 15px; }
+      .section-title { font-size: 26px; }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .ehmt1-grid, .symptom-grid, .research-grid { grid-template-columns: 1fr; }
+      .recruit-grid { grid-template-columns: 1fr; }
+      .navbar { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 20px;
+        border-bottom: 1px solid var(--border-light);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        gap: 16px;
+      }
+      .mobile-toggle { display: block; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    /* Smooth scroll offset */
+    [id] { scroll-margin-top: 80px; }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}</style></head>
+<body>
+
+<!-- Language Toggle (inside navbar) -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-brand">
+    <svg viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle>
+      <path d="M10 14 C10 10, 18 10, 18 14 C18 18, 10 18, 10 14 Z" fill="currentColor" opacity="0.3"></path>
+      <circle cx="14" cy="14" r="3" fill="currentColor"></circle>
+    </svg>
+    <span data-zh="Kleefstra 综合征" data-en="Kleefstra Syndrome">Kleefstra 综合征</span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="" data-zh="首页" data-en="Home">首页</a></li>
+    <li><a href="#about" data-zh="疾病概述" data-en="Disease Overview" class="active">疾病概述</a></li>
+    <li><a href="#center" data-zh="关于我们" data-en="About Us" class="">关于我们</a></li>
+    <li><a href="#join" data-zh="加入我们" data-en="Join Us" class="">加入我们</a></li>
+    <li><a href="#downloads" data-zh="资料下载" data-en="Resources" class="">资料下载</a></li>
+    <li><a href="#register" data-zh="信息登记" data-en="Registration" class="">信息登记</a></li>
+  </ul>
+  <div class="lang-toggle" style="position:static; box-shadow:none; border:none;">
+    <button class="lang-btn active" onclick="switchLang('zh')">中文</button>
+    <button class="lang-btn" onclick="switchLang('en')">EN</button>
+  </div>
+  <button class="mobile-toggle" onclick="toggleNav()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 12h18M3 6h18M3 18h18"></path>
+    </svg>
+  </button>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <div class="hero-bg" style="background-image: url('assets/hero-bg.jpg');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge" data-zh="9q34.3 微缺失综合征" data-en="9q34.3 Microdeletion Syndrome">9q34.3 微缺失综合征</div>
+    <h1 class="hero-title">
+      <span data-zh="Kleefstra 综合征" data-en="Kleefstra Syndrome">Kleefstra 综合征</span>
+      <span class="en" data-zh="认识罕见，拥抱希望" data-en="Understanding the Rare, Embracing Hope">认识罕见，拥抱希望</span>
+    </h1>
+    <p class="hero-desc" data-zh="Kleefstra 综合征是一种由染色体 9q34.3 区段缺失或 &lt;em&gt;EHMT1&lt;/em&gt; 基因变异导致的罕见遗传综合征。我们致力于推动该疾病的认知、研究与患者支持。" data-en="Kleefstra syndrome is a rare genetic disorder caused by deletions in the 9q34.3 region or mutations in the &lt;em&gt;EHMT1&lt;/em&gt; gene. We are dedicated to advancing awareness, research, and patient support.">Kleefstra 综合征是一种由染色体 9q34.3 区段缺失或 <em>EHMT1</em> 基因变异导致的罕见遗传综合征。我们致力于推动该疾病的认知、研究与患者支持。</p>
+    <div class="hero-actions">
+      <a href="#join" class="btn btn-primary" data-zh="加入我们" data-en="Join Us">加入我们</a>
+      <a href="#about" class="btn btn-outline" data-zh="了解更多" data-en="Learn More">了解更多</a>
+    </div>
+  </div>
+</section>
+
+<!-- About / Disease Introduction -->
+<section id="about">
+  <div class="section-container">
+    <span class="section-label" data-zh="疾病概述" data-en="DISEASE OVERVIEW">疾病概述</span>
+    <h2 class="section-title" data-zh="疾病认识与研究进展" data-en="Understanding &amp; Research Progress">疾病认识与研究进展</h2>
+    <p class="section-subtitle" data-zh="从首次报道到国际诊疗指南发布，科学家与临床团队不断深化对 Kleefstra 综合征的认识，为诊断、随访与治疗干预奠定基础。" data-en="From the first report to international care guidelines, scientists and clinicians continue to deepen the understanding of Kleefstra syndrome, laying the foundation for diagnosis, follow-up, and therapeutic intervention.">从首次报道到国际诊疗指南发布，科学家与临床团队不断深化对 Kleefstra 综合征的认识，为诊断、随访与治疗干预奠定基础。</p>
+    <h3 class="subsection-title" data-zh="Kleefstra 综合征的来历" data-en="Origin of Kleefstra Syndrome">Kleefstra 综合征的来历</h3>
+    <p class="subsection-desc" data-zh="Kleefstra 综合征（Kleefstra Syndrome, KS）又称为 9q 亚端粒缺失综合征，是一种由染色体 9q 亚端粒 34.3 区段缺失导致的罕见遗传综合征，1999 年由 Knight 等首次报道。随后，Tjitske Kleefstra 教授发现该区域 EHMT1 基因（常染色质组蛋白甲基转移酶 1 基因）的变异才是导致该综合征的根本原因，并在 2010 年正式提出 Kleefstra 综合征这一命名。" data-en="Kleefstra syndrome (KS), also known as the 9q subtelomeric deletion syndrome, is a rare genetic syndrome caused by a deletion in the subtelomeric 9q34.3 region of chromosome 9, first reported by Knight et al. in 1999. Prof. Tjitske Kleefstra subsequently discovered that variants of the EHMT1 gene (euchromatic histone methyltransferase 1) in this region are the root cause of the syndrome, and formally proposed the name Kleefstra syndrome in 2010.">Kleefstra 综合征（Kleefstra Syndrome, KS）又称为 9q 亚端粒缺失综合征，是一种由染色体 9q 亚端粒 34.3 区段缺失导致的罕见遗传综合征，1999 年由 Knight 等首次报道。随后，Tjitske Kleefstra 教授发现该区域 EHMT1 基因（常染色质组蛋白甲基转移酶 1 基因）的变异才是导致该综合征的根本原因，并在 2010 年正式提出 Kleefstra 综合征这一命名。</p>
+    <div class="about-grid">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">1999</div>
+          <div class="timeline-title" data-zh="首次报道" data-en="First Report">首次报道</div>
+          <p class="timeline-desc" data-zh="Knight 等人首次报道了 9q 亚端粒缺失综合征，描述了染色体 9q 末端区段缺失导致的一系列临床特征。" data-en="Knight et al. first reported the 9q subtelomeric deletion syndrome, describing a series of clinical features caused by deletions in the terminal region of chromosome 9q.">Knight 等人首次报道了 9q 亚端粒缺失综合征，描述了染色体 9q 末端区段缺失导致的一系列临床特征。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year" data-zh="后续研究" data-en="Following Research">后续研究</div>
+          <div class="timeline-title" data-zh="&lt;em&gt;EHMT1&lt;/em&gt; 基因的发现" data-en="Discovery of &lt;em&gt;EHMT1&lt;/em&gt; Gene"><em>EHMT1</em> 基因的发现</div>
+          <p class="timeline-desc" data-zh="Tjitske Kleefstra 教授发现该区域的 &lt;em&gt;EHMT1&lt;/em&gt; 基因（常染色质组蛋白甲基转移酶 1 基因）的变异才是导致该综合征的根本原因。" data-en="Prof. Tjitske Kleefstra discovered that mutations in the &lt;em&gt;EHMT1&lt;/em&gt; gene (euchromatic histone methyltransferase 1) in this region are the root cause of the syndrome.">Tjitske Kleefstra 教授发现该区域的 <em>EHMT1</em> 基因（常染色质组蛋白甲基转移酶 1 基因）的变异才是导致该综合征的根本原因。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2010</div>
+          <div class="timeline-title" data-zh="正式命名" data-en="Formal Naming">正式命名</div>
+          <p class="timeline-desc" data-zh="Kleefstra 教授正式提出 Kleefstra 综合征这一命名，统一了国际上对该疾病的称呼，推动了后续研究的标准化。" data-en="Prof. Kleefstra formally proposed the name Kleefstra syndrome, unifying the international nomenclature for this disease and promoting standardization of subsequent research.">Kleefstra 教授正式提出 Kleefstra 综合征这一命名，统一了国际上对该疾病的称呼，推动了后续研究的标准化。</p>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-number">9q34.3</div>
+          <div class="stat-label" data-zh="缺失染色体区段" data-en="Deletion Region">缺失染色体区段</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number"><em>EHMT1</em></div>
+          <div class="stat-label" data-zh="致病基因" data-en="Causative Gene">致病基因</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">1999</div>
+          <div class="stat-label" data-zh="首次报道年份" data-en="First Reported">首次报道年份</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number en">Rare</div>
+          <div class="stat-label" data-zh="疾病分类" data-en="Classification">疾病分类</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EHMT1 Gene Function -->
+    <h3 class="subsection-title" data-zh="EHMT1 基因功能" data-en="EHMT1 Gene Function">EHMT1 基因功能</h3>
+    <p class="subsection-desc" data-zh="EHMT1 基因为 9q34.3 区域内明确的单倍剂量敏感基因（Haploinsufficiency Score = 3，ISCA-26439），其功能缺失即可致病。" data-en="EHMT1 is a well-established haploinsufficient gene within the 9q34.3 region (Haploinsufficiency Score = 3, ISCA-26439); loss of one functional copy is sufficient to cause disease.">EHMT1 基因为 9q34.3 区域内明确的单倍剂量敏感基因（Haploinsufficiency Score = 3，ISCA-26439），其功能缺失即可致病。</p>
+    <div class="ehmt1-grid">
+      <div class="ehmt1-card">
+        <h4 data-zh="编码组蛋白甲基转移酶" data-en="Encoding a Histone Methyltransferase">编码组蛋白甲基转移酶</h4>
+        <p data-zh="EHMT1 基因编码组蛋白甲基转移酶，该酶可特异性催化组蛋白 H3 第 9 位赖氨酸的单甲基化、二甲基化与三甲基化，分别形成 H3K9me1、H3K9me2、H3K9me3（相当于给 H3 的 K9 位置打上标签，称为 H3K9 甲基化修饰）。" data-en="EHMT1 encodes a histone methyltransferase that specifically catalyzes mono-, di-, and trimethylation of lysine 9 on histone H3, forming H3K9me1, H3K9me2, and H3K9me3 — a mark added to K9 of histone H3, known as H3K9 methylation.">EHMT1 基因编码组蛋白甲基转移酶，该酶可特异性催化组蛋白 H3 第 9 位赖氨酸的单甲基化、二甲基化与三甲基化，分别形成 H3K9me1、H3K9me2、H3K9me3（相当于给 H3 的 K9 位置打上标签，称为 H3K9 甲基化修饰）。</p>
+      </div>
+      <div class="ehmt1-card">
+        <h4 data-zh="介导转录抑制" data-en="Mediating Transcriptional Repression">介导转录抑制</h4>
+        <p data-zh="H3K9 甲基化修饰作为表观遗传标记，可招募异染色质蛋白 HP1 结合甲基化组蛋白，进而介导转录抑制——即让基因“关上、少转录、沉默”，使其表达量降低。<sup class='cite-ref'><a href='#ref-1'>[1]</a></sup>" data-en="As an epigenetic mark, H3K9 methylation recruits heterochromatin protein HP1 to bind methylated histones, thereby mediating transcriptional repression — switching genes off and lowering their expression.<sup class='cite-ref'><a href='#ref-1'>[1]</a></sup>">H3K9 甲基化修饰作为表观遗传标记，可招募异染色质蛋白 HP1 结合甲基化组蛋白，进而介导转录抑制——即让基因“关上、少转录、沉默”，使其表达量降低。<sup class="cite-ref"><a href="#ref-1">[1]</a></sup></p>
+      </div>
+      <div class="ehmt1-card">
+        <h4 data-zh="弱催化 H3K27 甲基化" data-en="Weak H3K27 Methylation">弱催化 H3K27 甲基化</h4>
+        <p data-zh="该酶亦可弱催化组蛋白 H3 第 27 位赖氨酸甲基化（H3K27me）。" data-en="The enzyme can also weakly catalyze methylation of lysine 27 on histone H3 (H3K27me).">该酶亦可弱催化组蛋白 H3 第 27 位赖氨酸甲基化（H3K27me）。</p>
+      </div>
+      <div class="ehmt1-card">
+        <h4 data-zh="甲基化非组蛋白" data-en="Methylating Non-histone Proteins">甲基化非组蛋白</h4>
+        <p data-zh="该酶还可甲基化修饰非组蛋白：介导 p53/TP53 第 373 位赖氨酸的二甲基化修饰。<sup class='cite-ref'><a href='#ref-2'>[2]</a></sup>" data-en="The enzyme also methylates non-histone proteins, mediating dimethylation of lysine 373 on p53/TP53.<sup class='cite-ref'><a href='#ref-2'>[2]</a></sup>">该酶还可甲基化修饰非组蛋白：介导 p53/TP53 第 373 位赖氨酸的二甲基化修饰。<sup class="cite-ref"><a href="#ref-2">[2]</a></sup></p>
+      </div>
+    </div>
+    <div class="ref-list">
+      <div class="ref-list-title" data-zh="参考文献" data-en="References">参考文献</div>
+      <ol class="ref-items">
+        <li id="ref-1">Ogawa H, Ishiguro K, Gaubatz S, et al. A complex with chromatin modifiers that occupies E2F- and Myc-responsive genes in G0 cells[J]. Science, 2002, 296(5570): 1132-1136. <a href="https://pubmed.ncbi.nlm.nih.gov/12004135/" target="_blank" rel="noopener">PubMed: 12004135</a></li>
+        <li id="ref-2">Huang J, Dorsey J, Chuikov S, et al. G9a and Glp methylate lysine 373 in the tumor suppressor p53[J]. J Biol Chem, 2010, 285(13): 9636-9641. <a href="https://pubmed.ncbi.nlm.nih.gov/20118233/" target="_blank" rel="noopener">PubMed: 20118233</a></li>
+      </ol>
+    </div>
+
+    <!-- Clinical Manifestations -->
+    <h3 class="subsection-title" data-zh="疾病表现" data-en="Clinical Manifestations">疾病表现</h3>
+    <p class="subsection-desc" data-zh="Kleefstra 综合征为罕见神经发育综合征，可累及全身多系统，患者个体间差异（异质性）显著。" data-en="Kleefstra syndrome is a rare neurodevelopmental syndrome that can affect multiple organ systems, with marked variability between patients.">Kleefstra 综合征为罕见神经发育综合征，可累及全身多系统，患者个体间差异（异质性）显著。</p>
+    <div class="symptom-grid">
+      <div class="symptom-card">
+        <div class="symptom-header">
+          <div class="symptom-title" data-zh="颅面与牙齿特征" data-en="Craniofacial &amp; Dental">颅面与牙齿特征</div>
+          <span class="symptom-badge" data-zh="特征性" data-en="Characteristic">特征性</span>
+        </div>
+        <p class="symptom-desc" data-zh="短（小）头畸形、前额宽大、连眉、面中部发育不良、短鼻、鼻孔前翻、唇形异常；可合并诞生牙、乳牙滞留等牙体发育异常。" data-en="Short (small) head, broad forehead, synophrys, midface hypoplasia, short nose, anteverted nostrils, and abnormal lip shape; dental anomalies such as natal teeth and retained primary teeth.">短（小）头畸形、前额宽大、连眉、面中部发育不良、短鼻、鼻孔前翻、唇形异常；可合并诞生牙、乳牙滞留等牙体发育异常。</p>
+      </div>
+      <div class="symptom-card">
+        <div class="symptom-header">
+          <div class="symptom-title" data-zh="认知与语言" data-en="Cognition &amp; Language">认知与语言</div>
+          <span class="symptom-badge" data-zh="异质性显著" data-en="Highly variable">异质性显著</span>
+        </div>
+        <p class="symptom-desc" data-zh="多表现为中重度智力障碍，少数为轻度发育迟缓，极个别智商正常但合并孤独症谱系障碍；普遍存在严重表达性语言落后、理解功能相对保留，多需借助辅助方式沟通。" data-en="Most patients have moderate to severe intellectual disability, a few have mild developmental delay, and rarely individuals with normal IQ also show autism spectrum disorder. Severe expressive language delay with relatively preserved comprehension is typical; many rely on augmentative communication.">多表现为中重度智力障碍，少数为轻度发育迟缓，极个别智商正常但合并孤独症谱系障碍；普遍存在严重表达性语言落后、理解功能相对保留，多需借助辅助方式沟通。</p>
+      </div>
+      <div class="symptom-card">
+        <div class="symptom-header">
+          <div class="symptom-title" data-zh="行为与睡眠" data-en="Behavior &amp; Sleep">行为与睡眠</div>
+        </div>
+        <p class="symptom-desc" data-zh="幼儿期常出现孤独症样表现、刻板行为及轻度自伤；以夜间易醒、早醒、日间清醒过多为主要睡眠特征。青少年及青年期睡眠异常可预示神经发育倒退及精神异常，部分大龄患者可出现淡漠、类紧张症行为。" data-en="Autism-like behaviors, stereotypies, and mild self-injury are common in early childhood. Sleep is marked by frequent night waking, early morning waking, and excessive daytime wakefulness. Sleep abnormalities in adolescence and young adulthood may herald neurodevelopmental regression and psychiatric problems; some older patients show apathy and catatonia-like behavior.">幼儿期常出现孤独症样表现、刻板行为及轻度自伤；以夜间易醒、早醒、日间清醒过多为主要睡眠特征。青少年及青年期睡眠异常可预示神经发育倒退及精神异常，部分大龄患者可出现淡漠、类紧张症行为。</p>
+      </div>
+      <div class="symptom-card">
+        <div class="symptom-header">
+          <div class="symptom-title" data-zh="运动与肌张力" data-en="Motor &amp; Muscle Tone">运动与肌张力</div>
+        </div>
+        <p class="symptom-desc" data-zh="婴幼儿期肌张力低下，可致运动发育迟缓，但多数患儿 2～3 岁可独立行走。" data-en="Infantile hypotonia may cause motor delays, yet most children achieve independent walking by age 2–3.">婴幼儿期肌张力低下，可致运动发育迟缓，但多数患儿 2～3 岁可独立行走。</p>
+      </div>
+      <div class="symptom-card">
+        <div class="symptom-header">
+          <div class="symptom-title" data-zh="视力与听力" data-en="Vision &amp; Hearing">视力与听力</div>
+        </div>
+        <p class="symptom-desc" data-zh="常伴幼年远视，可合并传导性或感音神经性听力损伤。" data-en="Childhood hyperopia is common; conductive or sensorineural hearing impairment may occur.">常伴幼年远视，可合并传导性或感音神经性听力损伤。</p>
+      </div>
+      <div class="symptom-card">
+        <div class="symptom-header">
+          <div class="symptom-title" data-zh="心脏受累" data-en="Cardiac Involvement">心脏受累</div>
+          <span class="symptom-badge">~50%</span>
+        </div>
+        <p class="symptom-desc" data-zh="心脏受累高发，约 50% 患者存在先天性心脏病。" data-en="Cardiac involvement is highly prevalent — about 50% of patients have congenital heart disease.">心脏受累高发，约 50% 患者存在先天性心脏病。</p>
+      </div>
+      <div class="symptom-card">
+        <div class="symptom-header">
+          <div class="symptom-title" data-zh="泌尿与生殖系统" data-en="Urogenital System">泌尿与生殖系统</div>
+          <span class="symptom-badge">10%～30%</span>
+        </div>
+        <p class="symptom-desc" data-zh="10%～30% 患者存在膀胱输尿管反流、肾积水、肾囊肿及肾功能异常等泌尿系统畸形；30% 男性患者合并尿道下裂、隐睾、小阴茎等生殖器畸形。" data-en="10%–30% of patients have urinary tract malformations such as vesicoureteral reflux, hydronephrosis, renal cysts, and renal dysfunction; 30% of male patients have hypospadias, cryptorchidism, or micropenis.">10%～30% 患者存在膀胱输尿管反流、肾积水、肾囊肿及肾功能异常等泌尿系统畸形；30% 男性患者合并尿道下裂、隐睾、小阴茎等生殖器畸形。</p>
+      </div>
+      <div class="symptom-card">
+        <div class="symptom-header">
+          <div class="symptom-title" data-zh="癫痫" data-en="Epilepsy">癫痫</div>
+          <span class="symptom-badge">~30%</span>
+        </div>
+        <p class="symptom-desc" data-zh="约 30% 患者伴发癫痫，可见强直-阵挛、失神及复杂部分性发作。" data-en="About 30% of patients have epilepsy, including tonic-clonic, absence, and complex partial seizures.">约 30% 患者伴发癫痫，可见强直-阵挛、失神及复杂部分性发作。</p>
+      </div>
+      <div class="symptom-card">
+        <div class="symptom-header">
+          <div class="symptom-title" data-zh="其他合并异常" data-en="Other Abnormalities">其他合并异常</div>
+        </div>
+        <p class="symptom-desc" data-zh="可合并马蹄内翻足、上腹疝、气管支气管软化、胃食管反流等异常。" data-en="Clubfoot, epigastric hernia, tracheobronchomalacia, and gastroesophageal reflux may also occur.">可合并马蹄内翻足、上腹疝、气管支气管软化、胃食管反流等异常。</p>
+      </div>
+    </div>
+    <p class="ref-note" data-zh="注：目前本病预期寿命尚不明确。" data-en="Note: Life expectancy for this disease remains unclear.">注：目前本病预期寿命尚不明确。</p>
+
+    <!-- Research Progress -->
+    <h3 class="subsection-title" data-zh="研究进展" data-en="Research Progress">研究进展</h3>
+    <p class="subsection-desc" data-zh="近年来，国际协作研究不断深化对本病的认识，并推动临床随访管理的规范化。" data-en="In recent years, international collaborative studies have deepened the understanding of this disease and advanced standardized clinical management.">近年来，国际协作研究不断深化对本病的认识，并推动临床随访管理的规范化。</p>
+    <div class="research-grid">
+      <div class="research-card">
+        <a class="card-stretched-link" href="https://pubmed.ncbi.nlm.nih.gov/39746677/" target="_blank" rel="noopener" aria-label="阅读原文：65 例患者国际队列研究（PubMed）"></a>
+        <div class="research-meta">
+          <span class="research-year">2025</span>
+          <span class="research-journal">Clin Genet</span>
+          <span class="research-pmid">PMID: 39746677</span>
+        </div>
+        <div class="research-title" data-zh="65 例患者国际队列研究" data-en="International Cohort Study of 65 Patients">65 例患者国际队列研究</div>
+        <p class="research-desc" data-zh="Kleefstra 教授联合波士顿儿童医院在期刊 Clin Genet 上发布了 65 例患者的队列研究：" data-en="Prof. Kleefstra, together with Boston Children's Hospital, published a cohort study of 65 patients in Clin Genet:">Kleefstra 教授联合波士顿儿童医院在期刊 Clin Genet 上发布了 65 例患者的队列研究：</p>
+        <ul>
+          <li data-zh="77% 患者存在全面性发育迟缓或智力障碍；行为异常高发，其中孤独症谱系障碍占 38%，癫痫发生率为 15%" data-en="77% of patients had global developmental delay or intellectual disability; behavioral problems were common, with autism spectrum disorder in 38% and epilepsy in 15%">77% 患者存在全面性发育迟缓或智力障碍；行为异常高发，其中孤独症谱系障碍占 38%，癫痫发生率为 15%</li>
+          <li data-zh="并发症主要包括结构性心脏畸形（40%）、听力损伤（32%）及便秘（31%）" data-en="Main complications included structural cardiac defects (40%), hearing impairment (32%), and constipation (31%)">并发症主要包括结构性心脏畸形（40%）、听力损伤（32%）及便秘（31%）</li>
+          <li data-zh="报道多项新表型：24% 患者存在重度运动功能损害、9% 为药物难治性癫痫；少数患者出现斜视样眼球运动（2 例）、血小板减少症（2 例）、进行性脑萎缩（1 例）及肾上腺癌（1 例）" data-en="Several new phenotypes were reported: severe motor impairment in 24% and drug-resistant epilepsy in 9%; a few patients had strabismus-like eye movements (2), thrombocytopenia (2), progressive brain atrophy (1), or adrenal carcinoma (1)">报道多项新表型：24% 患者存在重度运动功能损害、9% 为药物难治性癫痫；少数患者出现斜视样眼球运动（2 例）、血小板减少症（2 例）、进行性脑萎缩（1 例）及肾上腺癌（1 例）</li>
+          <li data-zh="相较于 EHMT1 序列变异患者，9q34 缺失型患者的全面性发育迟缓/智力障碍、重度运动损害、癫痫、皮质性视损伤发生率显著更高" data-en="Compared with patients carrying EHMT1 sequence variants, those with 9q34 deletions had significantly higher rates of global developmental delay/intellectual disability, severe motor impairment, epilepsy, and cortical visual impairment">相较于 EHMT1 序列变异患者，9q34 缺失型患者的全面性发育迟缓/智力障碍、重度运动损害、癫痫、皮质性视损伤发生率显著更高</li>
+        </ul>
+        <p class="research-desc" data-zh="该研究结果可优化本病临床随访管理，并为后续机制研究与治疗干预提供依据。" data-en="The findings can help optimize clinical follow-up management and provide a basis for future mechanistic research and therapeutic intervention.">该研究结果可优化本病临床随访管理，并为后续机制研究与治疗干预提供依据。</p>
+        <figure class="research-figure">
+          <img src="assets/research-2025-cohort.jpg" alt="2025年65例Kleefstra临床队列研究图表：基因型分布、常见临床表现及基因型-表型关联" loading="lazy">
+          <figcaption data-zh="图：65 例 Kleefstra 临床队列的基因型分布、常见临床表现及基因型-表型关联（Clin Genet, 2025, PMID: 39746677）" data-en="Figure: Genotype distribution, common clinical phenotypes, and genotype-phenotype correlations in the cohort of 65 patients (Clin Genet, 2025, PMID: 39746677)">图：65 例 Kleefstra 临床队列的基因型分布、常见临床表现及基因型-表型关联（Clin Genet, 2025, PMID: 39746677）</figcaption>
+        </figure>
+        <span class="card-ext-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></span>
+      </div>
+      <div class="research-card">
+        <a class="card-stretched-link" href="https://pubmed.ncbi.nlm.nih.gov/41578867/" target="_blank" rel="noopener" aria-label="阅读原文：Kleefstra 综合征 1 型国际诊疗指南（PubMed）"></a>
+        <div class="research-meta">
+          <span class="research-year">2026</span>
+          <span class="research-journal">Genetics in Medicine</span>
+          <span class="research-pmid">PMID: 41578867</span>
+        </div>
+        <div class="research-title" data-zh="Kleefstra 综合征 1 型国际诊疗指南" data-en="International Care Guidelines for KS Type 1">Kleefstra 综合征 1 型国际诊疗指南</div>
+        <p class="research-desc" data-zh="Tjitske Kleefstra 教授领衔，由 15 国专家及患者代表组成国际协作组，共同制定了 Kleefstra 综合征 1 型的国际诊疗指南，并发表于 Genetics in Medicine 期刊。" data-en="Led by Prof. Tjitske Kleefstra, an international consortium of experts and patient representatives from 15 countries developed international care guidelines for Kleefstra syndrome type 1, published in Genetics in Medicine.">Tjitske Kleefstra 教授领衔，由 15 国专家及患者代表组成国际协作组，共同制定了 Kleefstra 综合征 1 型的国际诊疗指南，并发表于 Genetics in Medicine 期刊。</p>
+        <p class="research-desc" data-zh="基于本指南，结合本社群现状，我们已将其整理成册，作为 V2 科普手册发放至家长手中。" data-en="Based on these guidelines and the needs of our community, we have compiled them into the V2 educational handbook, which has been distributed to families.">基于本指南，结合本社群现状，我们已将其整理成册，作为 V2 科普手册发放至家长手中。</p>
+        <figure class="research-figure">
+          <img src="assets/research-2026-algorithm.jpg" alt="Kleefstra综合征1型临床诊断流程图：从疑似患者到确诊的检测路径" loading="lazy">
+          <figcaption data-zh="图：Kleefstra 综合征 1 型（KLEFS1）临床诊断流程图（Genetics in Medicine, 2026, PMID: 41578867）" data-en="Figure: Clinical diagnostic algorithm for Kleefstra syndrome type 1 (Genetics in Medicine, 2026, PMID: 41578867)">图：Kleefstra 综合征 1 型（KLEFS1）临床诊断流程图（Genetics in Medicine, 2026, PMID: 41578867）</figcaption>
+        </figure>
+        <span class="card-ext-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></span>
+        <a href="#downloads" class="research-link">
+          <span data-zh="前往资料下载" data-en="Go to Downloads">前往资料下载</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Us (Center) -->
+<section class="about-section" id="center">
+  <div class="section-container">
+    <span class="section-label" data-zh="关于我们" data-en="ABOUT US">关于我们</span>
+    <div style="max-width: 800px;">
+      <h2 class="section-title" data-zh="专注于 Kleefstra 综合征研究与患者支持的医学团队" data-en="A Medical Team Dedicated to Kleefstra Syndrome Research &amp; Patient Support">专注于 Kleefstra 综合征研究与患者支持的医学团队</h2>
+      <p class="section-subtitle" data-zh="团队成员来自三甲医院临床与专职科研骨干，长期从事遗传病诊断、神经发育障碍基础与临床研究等工作，希望通过专业积累，为 Kleefstra 综合征患儿家庭提供切实帮助。" data-en="Our team members are clinical and dedicated research backbones from tertiary hospitals, with long-term experience in genetic disease diagnosis and basic and clinical research on neurodevelopmental disorders. We aim to support families of children with Kleefstra syndrome through our professional expertise.">团队成员来自三甲医院临床与专职科研骨干，长期从事遗传病诊断、神经发育障碍基础与临床研究等工作，希望通过专业积累，为 Kleefstra 综合征患儿家庭提供切实帮助。</p>
+    </div>
+    <div class="about-text" style="max-width: 800px;">
+      <p data-zh="长期以来，国内该罕见病患儿家庭缺少稳定、正规的交流渠道，很多家长在孩子喂养、发育、多种并发症管理、康复干预等问题上独自摸索，难以获取同龄患儿真实的成长经历与照护经验。基于此，我们利用自身的专业优势，搭建了多学科团队，成员覆盖儿内科、儿保科、儿童神经内科、遗传科、产前诊断科及青年科研人员，成立了 Kleefstra 综合征社群，希望能收到关于孩子们的更多反馈。希望我们共同努力，为这些孩子提供更多的专业帮助及关爱。" data-en="For a long time, families of children with this rare disease in China have lacked stable and reliable communication channels. Many parents navigate feeding, development, multiple complication management, and rehabilitation entirely on their own, unable to access real growth experiences and caregiving insights from families with children of similar age. Based on this, we have leveraged our professional strengths to build a multidisciplinary team covering pediatric internal medicine, child health care, pediatric neurology, genetics, prenatal diagnosis, and young researchers, and established the Kleefstra syndrome community in the hope of receiving more feedback about the children. We hope to work together to provide these children with more professional help and care.">长期以来，国内该罕见病患儿家庭缺少稳定、正规的交流渠道，很多家长在孩子喂养、发育、多种并发症管理、康复干预等问题上独自摸索，难以获取同龄患儿真实的成长经历与照护经验。基于此，我们利用自身的专业优势，搭建了多学科团队，成员覆盖儿内科、儿保科、儿童神经内科、遗传科、产前诊断科及青年科研人员，成立了 Kleefstra 综合征社群，希望能收到关于孩子们的更多反馈。希望我们共同努力，为这些孩子提供更多的专业帮助及关爱。</p>
+    </div>
+    <div class="about-features">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+        </div>
+        <div class="feature-text" data-zh="临床遗传学专业背景" data-en="Clinical Genetics Expertise">临床遗传学专业背景
+          <small data-zh="长期从事遗传病基因检测与罕见病研究" data-en="Long-term experience in genetic testing &amp; rare disease research">长期从事遗传病基因检测与罕见病研究</small>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+        </div>
+        <div class="feature-text" data-zh="临床随访" data-en="Clinical Follow-up">临床随访
+          <small data-zh="本次随访计划由三甲医院临床医生与专职研究人员共同发起，且已完成审批备案，审批号为 XHEC-D-2024-118，您可以放心参与。" data-en="This follow-up program is jointly initiated by clinicians from tertiary hospitals and full-time researchers, and has been approved and filed under approval number XHEC-D-2024-118. You may participate with confidence.">本次随访计划由三甲医院临床医生与专职研究人员共同发起，且已完成审批备案，审批号为 XHEC-D-2024-118，您可以放心参与。</small>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </div>
+        <div class="feature-text" data-zh="病友社群" data-en="Patient Community">病友社群
+          <small data-zh="搭建合规平台，互通照护心得与康复资源" data-en="Compliant platform for sharing caregiving &amp; rehab resources">搭建合规平台，互通照护心得与康复资源</small>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        </div>
+        <div class="feature-text" data-zh="前沿诊疗科普分享" data-en="Latest Treatment &amp; Research Updates">前沿诊疗科普分享
+          <small data-zh="定期分享国内外最新研究进展与康复经验" data-en="Regular updates on latest research &amp; rehab advances">定期分享国内外最新研究进展与康复经验</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Join Us (合并患者招募) -->
+<section class="recruit-section" id="join">
+  <div class="section-container">
+    <span class="section-label" data-zh="加入我们" data-en="JOIN US">加入我们</span>
+    <h2 class="section-title" data-zh="携手同行，共建患者社群" data-en="Walking Together, Building a Patient Community">携手同行，共建患者社群</h2>
+    <p class="section-subtitle" data-zh="我们诚挚邀请 Kleefstra 综合征患儿家庭参与信息登记，共同搭建合规的病友交流与互助平台。" data-en="We sincerely invite families of children with Kleefstra syndrome to register and help build a compliant patient support community.">我们诚挚邀请 Kleefstra 综合征患儿家庭参与信息登记，共同搭建合规的病友交流与互助平台。</p>
+    <div class="recruit-grid">
+      <!-- Recruitment Card A -->
+      <div class="recruit-card green">
+        <div class="recruit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+        </div>
+        <span class="recruit-tag" data-zh="社群登记" data-en="Community Registration">社群登记</span>
+        <h3 class="recruit-title" data-zh="Kleefstra 综合征社群登记" data-en="Kleefstra Syndrome Community Registration">Kleefstra 综合征社群登记</h3>
+        <p class="recruit-desc" data-zh="如果您的孩子经基因检测确诊为 Kleefstra 综合征（9q34.3 微缺失 / &lt;em&gt;EHMT1&lt;/em&gt; 致病变异），我们诚挚邀请您参与本次家属信息登记，加入 Kleefstra 综合征病友社群。" data-en="If your child has been genetically confirmed with Kleefstra syndrome (9q34.3 microdeletion / &lt;em&gt;EHMT1&lt;/em&gt; pathogenic variant), we sincerely invite you to complete this family information registration and join the Kleefstra syndrome patient community.">如果您的孩子经基因检测确诊为 Kleefstra 综合征（9q34.3 微缺失 / <em>EHMT1</em> 致病变异），我们诚挚邀请您参与本次家属信息登记，加入 Kleefstra 综合征病友社群。</p>
+        <ul class="recruit-benefits">
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            <span data-zh="专属病友互助交流群，与全国同病种家长交流真实经验" data-en="Exclusive patient support group to share real experiences with families nationwide">专属病友互助交流群，与全国同病种家长交流真实经验</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            <span data-zh="专业团队长期随访跟踪，定期科普各年龄段高发并发症筛查要点" data-en="Long-term follow-up tracking by our professional team, with regular screening guidance for age-specific complications">专业团队长期随访跟踪，定期科普各年龄段高发并发症筛查要点</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            <span data-zh="优先获取国内 Kleefstra 综合征诊疗、康复干预相关科普资料" data-en="Priority access to domestic clinical and rehabilitation materials">优先获取国内 Kleefstra 综合征诊疗、康复干预相关科普资料</span>
+          </li>
+        </ul>
+        <a href="#patient-register" class="recruit-btn">
+          <span data-zh="社群登记" data-en="Register Now">社群登记</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+      <!-- Recruitment Card C: Follow-up -->
+      <div class="recruit-card orange">
+        <div class="recruit-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+        </div>
+        <span class="recruit-tag" data-zh="临床随访" data-en="Clinical Follow-up">临床随访</span>
+        <h3 class="recruit-title" data-zh="Kleefstra 综合征随访计划" data-en="Kleefstra Syndrome Follow-up Program">Kleefstra 综合征随访计划</h3>
+        <p class="recruit-desc" data-zh="本次随访计划由三甲医院临床医生与专职研究人员共同发起，且已完成审批备案，审批号为 XHEC-D-2024-118，您可以放心参与。加入后，您将获得专业团队的持续跟踪、各年龄段并发症筛查指导，以及最新诊疗与康复科普资料。" data-en="This follow-up program is jointly initiated by clinicians from tertiary hospitals and full-time researchers, and has been approved and filed under approval number XHEC-D-2024-118 — you may participate with confidence. Members receive continuous tracking from our professional team, age-specific complication screening guidance, and the latest clinical and rehabilitation materials.">本次随访计划由三甲医院临床医生与专职研究人员共同发起，且已完成审批备案，审批号为 XHEC-D-2024-118，您可以放心参与。加入后，您将获得专业团队的持续跟踪、各年龄段并发症筛查指导，以及最新诊疗与康复科普资料。</p>
+        <ul class="recruit-benefits">
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            <span data-zh="专业团队长期随访跟踪" data-en="Long-term follow-up tracking by professional team">专业团队长期随访跟踪</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            <span data-zh="定期科普各年龄段高发并发症筛查要点" data-en="Regular screening guidance for age-specific complications">定期科普各年龄段高发并发症筛查要点</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            <span data-zh="优先获取最新诊疗与康复干预科普资料" data-en="Priority access to latest clinical and rehabilitation materials">优先获取最新诊疗与康复干预科普资料</span>
+          </li>
+        </ul>
+        <div class="followup-actions">
+          <a href="#followup" class="followup-btn">
+            <span data-zh="首次参与随访" data-en="First-time Follow-up">首次参与随访</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
+          </a>
+          <a href="#" onclick="alert('Demo: 正式版将嵌入简道云跟踪随访表单，供已参与随访的家庭定期更新随访进展'); return false;" class="followup-btn">
+            <span data-zh="跟踪随访" data-en="Tracking Follow-up">跟踪随访</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-2.64-6.36M21 3v6h-6"></path></svg>
+          </a>
+          <a href="#" onclick="alert('Demo: 正式版将嵌入简道云资料上传表单，用于上传既往病历与检查报告，为三年前随访过的家庭补全建档资料'); return false;" class="followup-btn">
+            <span data-zh="建档资料上传" data-en="Upload Medical Records">建档资料上传</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Downloads -->
+<section id="downloads">
+  <div class="section-container">
+    <span class="section-label" data-zh="资料下载" data-en="RESOURCES">资料下载</span>
+    <h2 class="section-title" data-zh="科普文章与文档下载" data-en="Educational Articles &amp; Documents">科普文章与文档下载</h2>
+    <p class="section-subtitle" data-zh="下载最新的 Kleefstra 综合征科普资料、诊疗指南及康复建议。" data-en="Download the latest educational materials, clinical guidelines, and rehabilitation recommendations for Kleefstra syndrome.">下载最新的 Kleefstra 综合征科普资料、诊疗指南及康复建议。</p>
+    <div class="download-grid">
+      <div class="download-card">
+        <div class="download-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        </div>
+        <div class="download-info">
+          <div class="download-title" data-zh="Kleefstra 综合征临床简介" data-en="Kleefstra Syndrome Clinical Brief">Kleefstra 综合征临床简介</div>
+          <div class="download-meta" data-zh="PDF | 0.5 MB" data-en="PDF | 0.5 MB">PDF | 0.5 MB</div>
+          <a href="Kleefstra的临床简介.pdf" download class="download-link" data-zh="点击下载" data-en="Download">点击下载</a>
+        </div>
+      </div>
+      <div class="download-card">
+        <div class="download-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        </div>
+        <div class="download-info">
+          <div class="download-title" data-zh="KS 中国患者家长手册（2026 版）" data-en="KS Chinese Patient Family Handbook (2026 Edition)">KS 中国患者家长手册（2026 版）</div>
+          <div class="download-meta" data-zh="PDF | 0.9 MB | 基于国际诊疗指南整理" data-en="PDF | 0.9 MB | Based on International Guidelines">PDF | 0.9 MB | 基于国际诊疗指南整理</div>
+          <a href="KS中国患者家长手册-2026版.pdf" download class="download-link" data-zh="点击下载" data-en="Download">点击下载</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Embedded Registration Form -->
+<section class="form-section" id="register" style="padding: 0;">
+  <div id="patient-register">
+    <iframe src="https://tu4vjndsm4.jiandaoyun.com/f/6a4e4a2ffcea27149d60881f" width="100%" height="900" frameborder="0" style="display: block; border: none; background: white;">
+    </iframe>
+  </div>
+  <div id="followup">
+    <iframe src="https://tu4vjndsm4.jiandaoyun.com/f/6a4f8dce175d97ee1fad7755" width="100%" height="900" frameborder="0" style="display: block; border: none; background: white;">
+    </iframe>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Kleefstra Syndrome</div>
+      <div style="font-size: 14px; margin-top: 8px;" data-zh="专注于 Kleefstra 综合征研究与患者支持的医学团队" data-en="A Medical Team Dedicated to Kleefstra Syndrome Research &amp; Patient Support">专注于 Kleefstra 综合征研究与患者支持的医学团队</div>
+    </div>
+    <div class="footer-contact">
+      <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+      <span>yangtingting03@xinhuamed.com.cn</span>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span data-zh="联系我们" data-en="Contact Us">联系我们</span>
+    <span style="margin: 0 8px;">|</span>
+    <span>yangtingting03@xinhuamed.com.cn</span>
+  </div>
+</footer>
+
+<script>
+// Language Switching
+let currentLang = 'zh';
+
+function switchLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  // Update text content (supports inline HTML such as <em>)
+  document.querySelectorAll('[data-zh]').forEach(el => {
+    const text = el.getAttribute(`data-${lang}`);
+    if (text) {
+      if (text.includes('<')) {
+        el.innerHTML = text;
+      } else {
+        el.textContent = text;
+      }
+    }
+  });
+
+  // Update placeholders
+  document.querySelectorAll(`[data-${lang}-placeholder]`).forEach(el => {
+    el.placeholder = el.getAttribute(`data-${lang}-placeholder`);
+  });
+
+  // Update document language
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+}
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (window.scrollY >= sectionTop) {
+      current = section.getAttribute('id');
+    }
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${current}`) {
+      link.classList.add('active');
+    }
+  });
+});
+
+// Mobile nav toggle
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// Close mobile nav on link click
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+</script>
+
+
+
+</body></html>

@@ -1,0 +1,13 @@
+# 需求文档（非部署内容）
+网页需求*.docx
+
+# 旧版页面
+Kleefstra综合征Demo.html
+
+# 临时/调试文件
+.screenshots/
+.uploads/
+.trae-html-share-packages/
+assets/_docx_imgs/
+_*.py
+_*.js
