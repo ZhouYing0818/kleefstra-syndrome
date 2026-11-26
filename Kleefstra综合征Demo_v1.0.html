@@ -1425,7 +1425,7 @@
       <h3 data-zh="建档资料上传" data-en="Upload Medical Records">建档资料上传</h3>
       <button type="button" class="form-modal-close" onclick="closeFormModal()" aria-label="关闭">✕</button>
     </div>
-    <iframe id="formModalIframe" src="" loading="lazy" title="建档资料上传表单"></iframe>
+    <iframe id="formModalIframe" loading="lazy" title="建档资料上传表单"></iframe>
     <div class="form-modal-footer">
       <a href="https://tu4vjndsm4.jiandaoyun.com/f/6af8184abb6603505afc66e6" target="_blank" rel="noopener" data-zh="若表单无法显示，点此在新窗口打开" data-en="If the form does not display, open it in a new window">若表单无法显示，点此在新窗口打开</a>
     </div>
@@ -1508,7 +1508,7 @@ function openFormModal(e) {
   if (e) e.preventDefault();
   const modal = document.getElementById('formModal');
   const iframe = document.getElementById('formModalIframe');
-  if (!iframe.src) iframe.src = FORM_URL;
+  if (!iframe.getAttribute('src')) iframe.src = FORM_URL;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
